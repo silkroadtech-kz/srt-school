@@ -692,7 +692,7 @@ section[id] {
 
 /* Beside-content headings (split layouts) keep a tighter measure. */
 .section-heading.compact {
-    max-width: 30ch;
+    max-width: 38ch;
     margin-bottom: 0;
 }
 
@@ -1175,7 +1175,6 @@ section[id] {
 .faq-list {
     display: grid;
     gap: 12px;
-    max-width: 60ch;
     margin-top: 40px;
 }
 
