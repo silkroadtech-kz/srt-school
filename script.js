@@ -1,5 +1,5 @@
 // Replace with your deployed Worker URL (Step 5 in worker/README.md).
-const LEAD_ENDPOINT = "https://srt-academy-leads.silkroadtech.workers.dev";
+const LEAD_ENDPOINT = "https://srt-academy-leads.rxssul-aitkali.workers.dev";
 
 const header = document.querySelector("[data-header]");
 const nav = document.querySelector("[data-nav]");
