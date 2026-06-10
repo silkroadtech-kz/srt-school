@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <text x="32" y="34" text-anchor="middle"
+        font-family="'Bricolage Grotesque', 'Inter', system-ui, sans-serif"
+        font-weight="800" font-size="22" letter-spacing="-1" fill="#ffffff">SRT</text>
+  <text x="32" y="50" text-anchor="middle"
+        font-family="'Bricolage Grotesque', 'Inter', system-ui, sans-serif"
+        font-weight="700" font-size="8.5" letter-spacing="1.2" fill="#2a21ff">ACADEMY</text>
+</svg>
