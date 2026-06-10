@@ -1140,7 +1140,6 @@ section[id] {
     color: var(--white);
     background: var(--ink);
     border: 2px solid var(--ink);
-    box-shadow: var(--shadow-hard);
     transform: translateY(-16px);
 }
 
