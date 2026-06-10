@@ -509,12 +509,36 @@ section[id] {
 }
 
 .journey-cap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px;
+    border: 1.5px solid var(--ink);
+    border-radius: var(--radius);
+}
+
+.journey-cap-marker {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border: 1.5px solid var(--ink);
+    border-radius: 50%;
+    background: var(--white);
+    flex-shrink: 0;
+}
+
+.journey-cap-marker svg {
+    width: 16px;
+    height: 16px;
+}
+
+.journey-cap-text {
     display: flex;
     flex-direction: column;
     gap: 2px;
-    padding: 14px 16px;
-    border: 1.5px solid var(--ink);
-    border-radius: var(--radius);
+    min-width: 0;
 }
 
 .journey-cap-label {
@@ -529,13 +553,18 @@ section[id] {
 .journey-cap strong {
     font-family: "Bricolage Grotesque", sans-serif;
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     line-height: 1.1;
 }
 
 .journey-start {
     background: var(--paper);
     border-style: dashed;
+}
+
+.journey-start .journey-cap-marker {
+    background: var(--paper);
+    color: var(--muted);
 }
 
 .journey-finish {
@@ -548,16 +577,36 @@ section[id] {
     color: var(--accent);
 }
 
+.journey-finish .journey-cap-marker {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--ink);
+}
+
 .journey-steps {
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
     margin: 0;
-    padding: 0;
+    padding: 12px 0;
     list-style: none;
 }
 
+/* vertical rail connecting start → steps → finish */
+.journey-steps::before {
+    content: "";
+    position: absolute;
+    left: 32px;
+    top: -10px;
+    bottom: -10px;
+    width: 0;
+    border-left: 1.5px dashed var(--line-soft);
+    z-index: 0;
+}
+
 .journey-step {
+    position: relative;
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: center;
@@ -566,6 +615,7 @@ section[id] {
     border: 1.5px solid var(--ink);
     border-radius: var(--radius);
     background: var(--white);
+    z-index: 1;
     transition:
         transform 0.18s ease,
         background 0.18s ease;
@@ -579,10 +629,11 @@ section[id] {
 .journey-week {
     display: grid;
     place-items: center;
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
     border: 1.5px solid var(--ink);
     border-radius: 50%;
+    background: var(--white);
     font-family: "JetBrains Mono", monospace;
     font-size: 0.78rem;
     font-weight: 700;
@@ -597,14 +648,16 @@ section[id] {
 .journey-ico {
     display: grid;
     place-items: center;
-    width: 34px;
-    height: 34px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
     color: var(--accent);
 }
 
 .journey-ico svg {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
 }
 
 .journey-step:hover .journey-week {
@@ -613,16 +666,9 @@ section[id] {
     border-color: var(--ink);
 }
 
-/* connector arrows between path nodes */
-.journey-steps::after {
-    content: "↓";
-    display: block;
-    margin: -2px auto;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 1rem;
-    font-weight: 700;
-    line-height: 1;
-    color: var(--line-soft);
+.journey-step:hover .journey-ico {
+    background: var(--accent);
+    color: var(--white);
 }
 
 /* ---------------------------------------------------------------- ticker */
