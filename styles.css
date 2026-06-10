@@ -140,8 +140,7 @@ section[id] {
 
 .eyebrow,
 .section-kicker,
-.price-label,
-.journey-tag {
+.price-label {
     display: inline-flex;
     align-items: center;
     gap: 9px;
@@ -480,32 +479,6 @@ section[id] {
     border-radius: var(--radius-lg);
     background: var(--white);
     box-shadow: var(--shadow-hard);
-}
-
-.journey-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 2px 4px 12px;
-    border-bottom: 1.5px dashed var(--line-soft);
-}
-
-.journey-tag {
-    color: var(--muted);
-    text-transform: none;
-    letter-spacing: 0.02em;
-}
-
-.journey-dots {
-    display: inline-flex;
-    gap: 6px;
-}
-
-.journey-dots i {
-    width: 10px;
-    height: 10px;
-    border: 1.5px solid var(--ink);
-    border-radius: 50%;
 }
 
 .journey-cap {
