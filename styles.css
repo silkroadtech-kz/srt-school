@@ -614,7 +614,6 @@ section[id] {
 }
 
 /* connector arrows between path nodes */
-.journey-start::after,
 .journey-steps::after {
     content: "↓";
     display: block;
