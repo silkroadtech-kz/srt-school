@@ -2,7 +2,6 @@ const header = document.querySelector("[data-header]");
 const nav = document.querySelector("[data-nav]");
 const navToggle = document.querySelector("[data-nav-toggle]");
 const revealItems = document.querySelectorAll(".reveal");
-const timeline = document.querySelector("[data-timeline]");
 const form = document.querySelector("[data-lead-form]");
 const formNote = document.querySelector("[data-form-note]");
 const planSelect = document.querySelector("[data-plan-select]");
@@ -51,16 +50,6 @@ if ("IntersectionObserver" in window) {
 } else {
     revealItems.forEach((item) => item.classList.add("is-visible"));
 }
-
-timeline?.addEventListener("click", (event) => {
-    const card = event.target.closest(".week-card");
-    if (!card) return;
-
-    timeline
-        .querySelectorAll(".week-card")
-        .forEach((item) => item.classList.remove("is-active"));
-    card.classList.add("is-active");
-});
 
 planLinks.forEach((link) => {
     link.addEventListener("click", () => {

@@ -908,7 +908,6 @@ section[id] {
     color: inherit;
     background: var(--white);
     text-align: left;
-    cursor: pointer;
     transition:
         transform 0.18s ease,
         background 0.18s ease,
@@ -948,20 +947,6 @@ section[id] {
 .week-card:hover {
     transform: translate(-3px, -3px);
     box-shadow: var(--shadow-hard-sm);
-}
-
-.week-card.is-active {
-    color: var(--white);
-    background: var(--ink);
-    border-color: var(--ink);
-}
-
-.week-card.is-active span {
-    color: var(--accent);
-}
-
-.week-card.is-active small {
-    color: rgba(251, 250, 244, 0.72);
 }
 
 /* --------------------------------------------------------------- projects */
