@@ -749,6 +749,55 @@ section[id] {
     border-color: rgba(251, 250, 244, 0.4);
 }
 
+.outcome-card.internship {
+    grid-column: 1 / -1;
+    min-height: 0;
+    flex-direction: row;
+    align-items: center;
+    gap: 32px;
+    padding: 28px 32px;
+    color: var(--white);
+    background: var(--accent);
+    border-color: var(--ink);
+    box-shadow: var(--shadow-hard-sm);
+}
+
+.outcome-card.internship .card-index {
+    margin: 0;
+    flex: 0 0 auto;
+    color: var(--white);
+    border-color: rgba(251, 250, 244, 0.7);
+    font-size: 1.1rem;
+}
+
+.outcome-card.internship h3 {
+    margin: 0;
+    flex: 0 0 auto;
+    max-width: 260px;
+}
+
+.outcome-card.internship p {
+    margin: 0;
+    color: rgba(251, 250, 244, 0.92);
+    flex: 1 1 auto;
+}
+
+.outcome-card.internship:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 8px 8px 0 var(--ink);
+}
+
+@media (max-width: 760px) {
+    .outcome-card.internship {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+    .outcome-card.internship h3 {
+        max-width: none;
+    }
+}
+
 .card-index {
     display: grid;
     place-items: center;
