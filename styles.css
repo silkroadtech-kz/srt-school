@@ -278,16 +278,12 @@ section[id] {
 }
 
 .brand-mark {
-    display: grid;
-    width: 46px;
-    height: 46px;
-    place-items: center;
-    border: 2px solid var(--ink);
-    border-radius: 50%;
-    color: var(--ink);
-    background: var(--accent);
-    color: var(--white);
-    font-size: 0.92rem;
+    display: block;
+    width: 64px;
+    height: 64px;
+    border-radius: 8px;
+    object-fit: contain;
+    flex-shrink: 0;
 }
 
 .brand-copy {
