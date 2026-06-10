@@ -724,7 +724,10 @@ section[id] {
     flex: 0 0 auto;
     color: var(--white);
     border-color: rgba(251, 250, 244, 0.7);
-    font-size: 1.1rem;
+    font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+    font-size: 1.3rem;
+    line-height: 1;
+    padding-bottom: 2px;
 }
 
 .outcome-card.internship h3 {
