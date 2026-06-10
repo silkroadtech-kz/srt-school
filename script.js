@@ -1,3 +1,6 @@
+// Replace with your deployed Worker URL (Step 5 in worker/README.md).
+const LEAD_ENDPOINT = "https://srt-academy-leads.silkroadtech.workers.dev";
+
 const header = document.querySelector("[data-header]");
 const nav = document.querySelector("[data-nav]");
 const navToggle = document.querySelector("[data-nav-toggle]");
@@ -164,9 +167,10 @@ if (faq) {
     });
 }
 
-form?.addEventListener("submit", (event) => {
+form?.addEventListener("submit", async (event) => {
     event.preventDefault();
 
+    const submitBtn = form.querySelector("button[type='submit']");
     const fields = Array.from(
         form.querySelectorAll("input[required], select[required]"),
     );
@@ -188,23 +192,44 @@ form?.addEventListener("submit", (event) => {
     }
 
     const data = Object.fromEntries(new FormData(form).entries());
-    formNote?.classList.remove("error");
-    formNote?.classList.add("success");
-
-    if (formNote) {
-        formNote.textContent = `Спасибо, ${data.name}! Демо-заявка на ${data.plan} сохранена в браузере. Следующий шаг — подключить отправку в Telegram, CRM или Supabase.`;
+    const originalBtnText = submitBtn?.textContent;
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Отправляем…";
     }
+    formNote?.classList.remove("error", "success");
+    if (formNote) formNote.textContent = "Отправляем заявку…";
 
-    localStorage.setItem(
-        "vibeCodingLead",
-        JSON.stringify({
-            ...data,
-            createdAt: new Date().toISOString(),
-        }),
-    );
+    try {
+        const res = await fetch(LEAD_ENDPOINT, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+        });
 
-    form.reset();
-    if (planSelect) planSelect.value = "Standard";
+        if (!res.ok) {
+            throw new Error(`HTTP ${res.status}`);
+        }
+
+        formNote?.classList.add("success");
+        if (formNote) {
+            formNote.textContent = `Спасибо, ${data.name}! Заявка ушла в Telegram — свяжемся в ближайшее время.`;
+        }
+        form.reset();
+        if (planSelect) planSelect.value = "Standard";
+    } catch (err) {
+        console.error("Lead submit failed", err);
+        formNote?.classList.add("error");
+        if (formNote) {
+            formNote.textContent =
+                "Не удалось отправить. Напишите нам напрямую в Telegram @silkroadtech или попробуйте ещё раз.";
+        }
+    } finally {
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalBtnText;
+        }
+    }
 });
 
 form?.addEventListener("input", (event) => {

@@ -692,6 +692,15 @@
                     </div>
 
                     <form class="lead-form" data-lead-form novalidate>
+                        <label class="hp-field" aria-hidden="true">
+                            <span>Не заполняйте это поле</span>
+                            <input
+                                type="text"
+                                name="website"
+                                tabindex="-1"
+                                autocomplete="off"
+                            />
+                        </label>
                         <label>
                             <span>Имя</span>
                             <input
@@ -736,9 +745,8 @@
                             Отправить заявку →
                         </button>
                         <p class="form-note" data-form-note>
-                            Форма пока работает в демо&#8209;режиме: после
-                            подключения backend заявки можно отправлять в
-                            Telegram, CRM или Supabase.
+                            Заявка уходит напрямую в наш Telegram — ответим в
+                            течение рабочего дня.
                         </p>
                     </form>
                 </div>
