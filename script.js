@@ -54,6 +54,52 @@ if ("IntersectionObserver" in window) {
     revealItems.forEach((item) => item.classList.add("is-visible"));
 }
 
+document.querySelectorAll("[data-countdown]").forEach((node) => {
+    const target = Date.parse(node.dataset.countdown);
+    if (Number.isNaN(target)) return;
+
+    const units = {
+        days: node.querySelector('[data-unit="days"]'),
+        hours: node.querySelector('[data-unit="hours"]'),
+        minutes: node.querySelector('[data-unit="minutes"]'),
+        seconds: node.querySelector('[data-unit="seconds"]'),
+    };
+    const srNode = node.querySelector("[data-countdown-sr]");
+    const pad = (n) => String(n).padStart(2, "0");
+
+    const render = () => {
+        const diff = target - Date.now();
+        if (diff <= 0) {
+            units.days.textContent = "00";
+            units.hours.textContent = "00";
+            units.minutes.textContent = "00";
+            units.seconds.textContent = "00";
+            node.classList.add("is-ended");
+            if (srNode) srNode.textContent = "Ранний поток закрыт.";
+            return false;
+        }
+        const totalSeconds = Math.floor(diff / 1000);
+        const days = Math.floor(totalSeconds / 86400);
+        const hours = Math.floor((totalSeconds % 86400) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+        units.days.textContent = pad(days);
+        units.hours.textContent = pad(hours);
+        units.minutes.textContent = pad(minutes);
+        units.seconds.textContent = pad(seconds);
+        if (srNode) {
+            srNode.textContent = `До конца раннего потока: ${days} дн ${hours} ч ${minutes} мин.`;
+        }
+        return true;
+    };
+
+    if (render()) {
+        const tick = setInterval(() => {
+            if (!render()) clearInterval(tick);
+        }, 1000);
+    }
+});
+
 planLinks.forEach((link) => {
     link.addEventListener("click", () => {
         const selectedPlan = link.dataset.plan;
