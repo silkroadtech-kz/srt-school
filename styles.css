@@ -270,6 +270,34 @@ section[id] {
     border-bottom-color: var(--ink);
 }
 
+.brand-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    min-width: max-content;
+}
+
+.brand-by {
+    color: var(--muted);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+}
+
+.brand-by a {
+    color: var(--ink);
+    font-weight: 600;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 1px;
+    transition: color 0.2s ease;
+}
+
+.brand-by a:hover {
+    color: var(--accent);
+}
+
 .brand {
     display: inline-flex;
     align-items: center;
@@ -1554,10 +1582,28 @@ section[id] {
     font-size: 0.8rem;
 }
 
-.site-footer a {
+.site-footer > a {
     font-weight: 600;
     border-bottom: 2px solid var(--accent);
     padding-bottom: 2px;
+}
+
+.site-footer .footer-by {
+    color: var(--muted);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.8rem;
+}
+
+.site-footer .footer-by a {
+    color: var(--ink);
+    font-weight: 600;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 1px;
+    transition: color 0.2s ease;
+}
+
+.site-footer .footer-by a:hover {
+    color: var(--accent);
 }
 
 /* --------------------------------------------------------------- reveal fx */
@@ -1658,6 +1704,10 @@ section[id] {
     }
 
     .brand-copy small {
+        display: none;
+    }
+
+    .brand-by {
         display: none;
     }
 
