@@ -1898,8 +1898,41 @@ section[id] {
     .outcome-grid,
     .pricing-grid,
     .project-board,
-    .timeline {
+    .timeline,
+    .mentors-row {
         grid-template-columns: 1fr;
+    }
+
+    .mentors-row {
+        gap: 24px;
+    }
+
+    .mentor-card {
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .mentor-photo {
+        flex: 0 0 96px;
+        width: 96px;
+    }
+
+    .mentor-meta {
+        margin-top: 0;
+        padding-top: 0;
+        border-top: 0;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .mentors-link {
+        white-space: normal;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+        max-width: 100%;
+        font-size: 0.82rem;
+        padding: 12px 14px;
     }
 
     .trust-row div {
