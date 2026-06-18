@@ -7,8 +7,6 @@ const navToggle = document.querySelector("[data-nav-toggle]");
 const revealItems = document.querySelectorAll(".reveal");
 const form = document.querySelector("[data-lead-form]");
 const formNote = document.querySelector("[data-form-note]");
-const planSelect = document.querySelector("[data-plan-select]");
-const planLinks = document.querySelectorAll("[data-plan]");
 const faq = document.querySelector("[data-faq]");
 
 const setHeaderState = () => {
@@ -98,19 +96,6 @@ document.querySelectorAll("[data-countdown]").forEach((node) => {
             if (!render()) clearInterval(tick);
         }, 1000);
     }
-});
-
-planLinks.forEach((link) => {
-    link.addEventListener("click", () => {
-        const selectedPlan = link.dataset.plan;
-        if (!selectedPlan || !planSelect) return;
-
-        planSelect.value = selectedPlan;
-        formNote?.classList.remove("success", "error");
-        if (formNote) {
-            formNote.textContent = `Выбран тариф ${selectedPlan}. Заполните контакты — и можно передавать заявку в Telegram/CRM после подключения backend.`;
-        }
-    });
 });
 
 if (faq) {
@@ -213,6 +198,43 @@ if (faq) {
     });
 }
 
+const phoneInput = form?.querySelector("[data-phone-mask]");
+
+// Formats KZ mobile numbers as +7 (7XX) XXX-XX-XX from raw digits.
+function formatKzPhone(value) {
+    let digits = value.replace(/\D/g, "");
+    // Normalize a leading 8 (local prefix) to the country code 7.
+    if (digits.startsWith("8")) digits = "7" + digits.slice(1);
+    // Assume KZ country code if it's missing.
+    if (digits && !digits.startsWith("7")) digits = "7" + digits;
+    digits = digits.slice(0, 11);
+
+    if (!digits) return "";
+
+    const rest = digits.slice(1);
+    let out = "+7";
+    if (rest.length > 0) out += " (" + rest.slice(0, 3);
+    if (rest.length >= 3) out += ")";
+    if (rest.length > 3) out += " " + rest.slice(3, 6);
+    if (rest.length > 6) out += "-" + rest.slice(6, 8);
+    if (rest.length > 8) out += "-" + rest.slice(8, 10);
+    return out;
+}
+
+if (phoneInput) {
+    const applyMask = () => {
+        phoneInput.value = formatKzPhone(phoneInput.value);
+    };
+    phoneInput.addEventListener("input", applyMask);
+    phoneInput.addEventListener("focus", () => {
+        if (!phoneInput.value) phoneInput.value = "+7 (";
+    });
+    phoneInput.addEventListener("blur", () => {
+        // Clear the placeholder prefix if the user typed nothing.
+        if (phoneInput.value.replace(/\D/g, "") === "7") phoneInput.value = "";
+    });
+}
+
 form?.addEventListener("submit", async (event) => {
     event.preventDefault();
 
@@ -231,9 +253,21 @@ form?.addEventListener("submit", async (event) => {
         formNote?.classList.add("error");
         if (formNote) {
             formNote.textContent =
-                "Заполните обязательные поля: имя, контакт, проект и тариф.";
+                "Заполните обязательные поля: имя и номер телефона.";
         }
         invalidFields[0].focus();
+        return;
+    }
+
+    if (phoneInput && phoneInput.value.replace(/\D/g, "").length !== 11) {
+        phoneInput.classList.add("is-invalid");
+        formNote?.classList.remove("success");
+        formNote?.classList.add("error");
+        if (formNote) {
+            formNote.textContent =
+                "Введите номер телефона полностью: +7 (700) 000-00-00.";
+        }
+        phoneInput.focus();
         return;
     }
 
@@ -262,13 +296,12 @@ form?.addEventListener("submit", async (event) => {
             formNote.textContent = `Спасибо, ${data.name}! Заявка ушла в Telegram — свяжемся в ближайшее время.`;
         }
         form.reset();
-        if (planSelect) planSelect.value = "Standard";
     } catch (err) {
         console.error("Lead submit failed", err);
         formNote?.classList.add("error");
         if (formNote) {
             formNote.textContent =
-                "Не удалось отправить. Напишите нам напрямую в Telegram @silkroadtech или попробуйте ещё раз.";
+                "Отправка временно недоступна. Напишите нам напрямую в Telegram @silkroadtech или попробуйте ещё раз.";
         }
     } finally {
         if (submitBtn) {

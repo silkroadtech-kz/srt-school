@@ -8,9 +8,8 @@ const ALLOWED_ORIGINS = new Set([
 
 const MAX_LEN = {
     name: 80,
-    contact: 120,
-    project: 80,
-    plan: 40,
+    phone: 40,
+    age: 40,
 };
 
 const escapeHtml = (value) =>
@@ -67,7 +66,7 @@ export default {
         }
 
         const clean = {};
-        for (const field of ["name", "contact", "project", "plan"]) {
+        for (const field of ["name", "phone"]) {
             const value = (data[field] ?? "").toString().trim();
             if (!value) {
                 return json({ error: `Missing ${field}` }, 400, cors);
@@ -76,6 +75,15 @@ export default {
                 return json({ error: `${field} too long` }, 400, cors);
             }
             clean[field] = value;
+        }
+
+        // Age is optional.
+        const age = (data.age ?? "").toString().trim();
+        if (age.length > MAX_LEN.age) {
+            return json({ error: "age too long" }, 400, cors);
+        }
+        if (age) {
+            clean.age = age;
         }
 
         if (env.RATE_LIMITER) {
@@ -94,9 +102,9 @@ export default {
         const text =
             `🎓 <b>Новая заявка — SRT Academy</b>\n\n` +
             `<b>Имя:</b> ${escapeHtml(clean.name)}\n` +
-            `<b>Контакт:</b> ${escapeHtml(clean.contact)}\n` +
-            `<b>Проект:</b> ${escapeHtml(clean.project)}\n` +
-            `<b>Тариф:</b> ${escapeHtml(clean.plan)}\n\n` +
+            `<b>Телефон:</b> ${escapeHtml(clean.phone)}\n` +
+            (clean.age ? `<b>Возраст ребёнка:</b> ${escapeHtml(clean.age)}\n` : "") +
+            `\n` +
             `<i>${escapeHtml(country)} · ${escapeHtml(ip)}</i>\n` +
             `<i>${escapeHtml(referer)}</i>\n` +
             `<i>${escapeHtml(ua)}</i>`;
