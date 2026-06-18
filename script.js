@@ -4,7 +4,17 @@ const LEAD_ENDPOINT = "https://srt-academy-leads.rxssul-aitkali.workers.dev";
 const header = document.querySelector("[data-header]");
 const nav = document.querySelector("[data-nav]");
 const navToggle = document.querySelector("[data-nav-toggle]");
-const revealItems = document.querySelectorAll(".reveal");
+const staggerGroups = document.querySelectorAll(".stagger");
+
+// Index each staggered child so CSS can cascade their entrance via --i.
+staggerGroups.forEach((group) => {
+    Array.from(group.children).forEach((child, i) =>
+        child.style.setProperty("--i", i),
+    );
+});
+
+// Both plain reveals and stagger containers just need `.is-visible` toggled.
+const revealItems = document.querySelectorAll(".reveal, .stagger");
 const form = document.querySelector("[data-lead-form]");
 const formNote = document.querySelector("[data-form-note]");
 const faq = document.querySelector("[data-faq]");
@@ -48,6 +58,18 @@ if ("IntersectionObserver" in window) {
     );
 
     revealItems.forEach((item) => revealObserver.observe(item));
+
+    // Pause the hero logo bob while the hero is scrolled out of view so the
+    // looping animation doesn't burn the GPU off-screen.
+    const heroDecor = document.querySelector(".hero-decor");
+    if (heroDecor) {
+        const decorObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) =>
+                heroDecor.classList.toggle("is-paused", !entry.isIntersecting),
+            );
+        });
+        decorObserver.observe(heroDecor);
+    }
 } else {
     revealItems.forEach((item) => item.classList.add("is-visible"));
 }
@@ -290,6 +312,10 @@ form?.addEventListener("submit", async (event) => {
         if (!res.ok) {
             throw new Error(`HTTP ${res.status}`);
         }
+
+        window.posthog?.capture("lead_submitted", {
+            age: data.age,
+        });
 
         formNote?.classList.add("success");
         if (formNote) {

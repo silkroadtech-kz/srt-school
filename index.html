@@ -137,6 +137,76 @@
                 ]
             }
         </script>
+
+        <!-- PostHog analytics: autocapture clicks/pageviews, scroll heatmaps, session recordings -->
+        <script>
+            !(function (t, e) {
+                var o, n, p, r;
+                e.__SV ||
+                    ((window.posthog = e),
+                    (e._i = []),
+                    (e.init = function (i, s, a) {
+                        function g(t, e) {
+                            var o = e.split(".");
+                            2 == o.length && ((t = t[o[0]]), (e = o[1]));
+                            t[e] = function () {
+                                t.push(
+                                    [e].concat(
+                                        Array.prototype.slice.call(arguments, 0),
+                                    ),
+                                );
+                            };
+                        }
+                        ((p = t.createElement("script")).type =
+                            "text/javascript"),
+                            (p.crossOrigin = "anonymous"),
+                            (p.async = !0),
+                            (p.src =
+                                s.api_host.replace(
+                                    ".i.posthog.com",
+                                    "-assets.i.posthog.com",
+                                ) + "/static/array.js"),
+                            (r =
+                                t.getElementsByTagName(
+                                    "script",
+                                )[0]).parentNode.insertBefore(p, r);
+                        var u = e;
+                        for (
+                            void 0 !== a ? (u = e[a] = []) : (a = "posthog"),
+                                u.people = u.people || [],
+                                u.toString = function (t) {
+                                    var e = "posthog";
+                                    return (
+                                        "posthog" !== a && (e += "." + a),
+                                        t || (e += " (stub)"),
+                                        e
+                                    );
+                                },
+                                u.people.toString = function () {
+                                    return u.toString(1) + ".people (stub)";
+                                },
+                                o =
+                                    "init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording capturePageView capturePageLeave debug getPageViewId".split(
+                                        " ",
+                                    ),
+                                n = 0;
+                            n < o.length;
+                            n++
+                        )
+                            g(u, o[n]);
+                        e._i.push([i, s, a]);
+                    }),
+                    (e.__SV = 1));
+            })(document, window.posthog || []);
+            posthog.init("phc_tHQzNEiZcX4ZezJ4QTJ3yMW9zesczwBZy8UJCmMopqCJ", {
+                api_host: "https://eu.i.posthog.com",
+                person_profiles: "identified_only",
+                capture_pageview: true,
+                capture_pageleave: true,
+                autocapture: true,
+                enable_heatmaps: true,
+            });
+        </script>
     </head>
     <body>
         <div class="noise" aria-hidden="true"></div>
@@ -212,7 +282,7 @@
                         </p>
                         <div class="hero-actions reveal delay-3">
                             <a class="button primary" href="#apply"
-                                >Записаться на диагностику</a
+                                >Оставить заявку</a
                             >
                             <a class="button ghost" href="#projects"
                                 >Смотреть программу</a
@@ -288,7 +358,7 @@
                         </p>
                     </div>
 
-                    <ul class="opportunity-points reveal delay-1">
+                    <ul class="opportunity-points stagger">
                         <li>
                             <p>
                                 Лишь около 13% людей в мире вообще пользуются
@@ -318,7 +388,7 @@
                         Ваш ребёнок может войти в этот один процент сейчас — за
                         8 недель. Пока остальные не спохватились.
                     </p>
-                    <a class="button ghost" href="#apply">Записаться на курс</a>
+                    <a class="button ghost" href="#apply">Оставить заявку</a>
                 </div>
             </section>
 
@@ -334,7 +404,7 @@
                     </p>-->
                 </div>
 
-                <div class="outcomes-duo reveal delay-1">
+                <div class="outcomes-duo stagger">
                     <article class="duo-card duo-card--skill">
                         <span class="duo-num">01</span>
                         <span class="duo-tag">Навык</span>
@@ -369,7 +439,7 @@
                         компании реально платят.
                     </p>
                 </div>
-                <div class="project-board reveal delay-1">
+                <div class="project-board stagger">
                     <article>
                         <h3>Сайты и веб&#8209;приложения</h3>
                         <ul>
@@ -467,7 +537,7 @@
                 </div>
 
                 <ul
-                    class="mentors-row reveal delay-1"
+                    class="mentors-row stagger"
                     aria-label="Менторы академии"
                 >
                     <li class="mentor-card">
